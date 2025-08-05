@@ -1,0 +1,6 @@
+flask
+gunicorn
+flask_sqlalchemy
+stripe
+flask_mail
+pytz

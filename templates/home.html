@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-logo">
+        <img src="{{ url_for('static', filename='images/Thryfted Text.png') }}" alt="Thryfted Logo">
+      </div>
+    <div class="hero-content">
+        <h1 class="hero-title">Equal access to style that fits your feed — and your life.</h1>
+        <p class="hero-subtitle">Brand-name fashion at clearance prices. No markups, just style.</p>
+        <a href="{{ url_for('shop') }}" class="cta-button">Shop Clearance Now</a>
+    </div>
+</section>
+
+<section class="banner-alert">
+    <div class="scrolling-banner">
+        <span>🔥 NEW DROP: Up to 70% off designer brands • Limited time clearance event • Free shipping on orders $50+ • 🔥</span>
+    </div>
+</section>
+
+<section class="featured-products">
+    <div class="container">
+        <h2 class="section-title">Featured Drops</h2>
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+                    <div class="product-overlay">
+                        <a href="{{ url_for('product_detail', product_id=product.id) }}" class="overlay-button">View Details</a>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <p class="product-brand">{{ product.brand }}</p>
+                    <div class="product-price">
+                        <span class="current-price">${{ "%.2f"|format(product.price) }}</span>
+                        <span class="original-price">${{ "%.2f"|format(product.original_price) }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="section-cta">
+            <a href="{{ url_for('shop') }}" class="secondary-button">See All Products</a>
+        </div>
+    </div>
+</section>
+
+<section class="mission-preview">
+    <div class="container">
+        <div class="mission-content">
+            <h2>Why Thryfted?</h2>
+            <p>We're bridging the gap between teens of color in low-income communities and the brand-name fashion they love. No more choosing between style and budget.</p>
+            <a href="{{ url_for('about') }}" class="text-link">Learn more about our mission →</a>
+        </div>
+        
+        {% if session.survey_completed %}
+          <a href="{{ url_for('retake_survey') }}" class="retake-button cta-button">Retake the Survey</a>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<div id="share-popup" class="share-popup">
+    <p>Love what you see? Share Thryfted with a friend!</p>
+    <button onclick="copySiteLink()">📋 Copy Link</button>
+    <span id="copy-feedback" class="copy-feedback"></span>
+    <button onclick="closePopup()" class="close-btn">✕</button>
+</div>
+
+<script>
+function copySiteLink() {
+    const link = window.location.origin;
+    navigator.clipboard.writeText(link).then(() => {
+        document.getElementById("copy-feedback").textContent = "Link copied!";
+        fetch('/share_count', { method: 'POST' });
+    }).catch(() => {
+        document.getElementById("copy-feedback").textContent = "Failed to copy.";
+    });
+}
+
+function closePopup() {
+    document.getElementById("share-popup").style.display = 'none';
+}
+
+setTimeout(() => {
+    document.getElementById("share-popup").style.display = 'block';
+}, 30000);
+</script>
+
+{% endblock %}

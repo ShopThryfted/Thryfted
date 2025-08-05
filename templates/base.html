@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Thryfted Archive{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="nav-logo">
+                <!-- <img src="{{ url_for('static', filename='images/Thryfted Text.png') }}" alt="Thryfted Logo" class="logo-img"> -->
+                <span class="logo-text">Thryfted</span>
+                <span class="logo-archive">Archive</span>
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+                <a href="{{ url_for('shop') }}" class="nav-link">Shop</a>
+                <a href="{{ url_for('partners') }}" class="nav-link">Partners</a>
+                <a href="{{ url_for('about') }}" class="nav-link">About</a>
+                <a href="{{ url_for('cart') }}" class="nav-link cart-link">
+                    Cart ({{ session.cart|length if session.cart else 0 }})
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Thryfted Archive</h4>
+                <p>Equal access to style that fits your feed — and your life.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="{{ url_for('shop') }}">Shop</a>
+                <a href="{{ url_for('partners') }}">Brand Partners</a>
+                <a href="{{ url_for('about') }}">About Us</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>shopthryfted@gmail.com</p>
+                <p>Follow us @shop.thryfted</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Thryfted Archive. Making style accessible.</p>
+        </div>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

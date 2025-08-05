@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Thryfted Archive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .admin-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .admin-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #007bff;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .messages-section h2 {
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .messages-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .message-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .message-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .message-card.unread {
+            border-left: 4px solid #007bff;
+        }
+
+        .message-header {
+            padding: 25px 25px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .message-meta {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .sender-info {
+            flex: 1;
+        }
+
+        .sender-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .sender-email {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .message-timestamp {
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .category-badge.partnership { background: #e8f5e8; color: #2e7d32; }
+        .category-badge.inventory { background: #fff3e0; color: #f57c00; }
+        .category-badge.collaboration { background: #fce4ec; color: #c2185b; }
+        .category-badge.press { background: #f3e5f5; color: #7b1fa2; }
+        .category-badge.other { background: #f5f5f5; color: #616161; }
+
+        .company-name {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .message-content {
+            padding: 0 25px 25px;
+        }
+
+        .message-text {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reply {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-reply:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        .btn-mark-read {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-mark-read:hover {
+            background: #1e7e34;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        .unread-indicator {
+            width: 8px;
+            height: 8px;
+            background: #007bff;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #666;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .admin-header h1 {
+                font-size: 2rem;
+            }
+
+            .message-actions {
+                justify-content: center;
+            }
+
+            .action-btn {
+                flex: 1;
+                min-width: 100px;
+                text-align: center;
+            }
+
+            .message-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .flash-success {
+          background-color: #d1fae5;
+          color: #065f46;
+          padding: 1rem;
+          border-radius: 8px;
+          margin-bottom: 1rem;
+        }
+
+        .flash-error {
+          background-color: #fee2e2;
+          color: #991b1b;
+          padding: 1rem;
+          border-radius: 8px;
+          margin-bottom: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+    <a href="/" class="back-link">← Back to Site</a>
+
+    <div class="admin-header">
+        <h1>🔒 Admin Dashboard</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <h2>📊 Traction Dashboard</h2>
+        <div class="stats-bar">
+            <div class="stat-card">
+                <span class="stat-number">{{ site_views }}</span>
+                <div class="stat-label">Site Views</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ share_count }}</span>
+                <div class="stat-label">Link Shares</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">${{ '%.2f'|format(revenue) }}</span>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+        </div>
+        
+        <p>Manage customer messages and partnership inquiries</p>
+    </div>
+
+    <div class="container">
+        <div class="stats-bar">
+            <div class="stat-card">
+                <span class="stat-number">{{ messages|length }}</span>
+                <div class="stat-label">Total Messages</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ messages|selectattr("is_read", "equalto", false)|list|length }}</span>
+                <div class="stat-label">Unread Messages</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ messages|selectattr("category", "equalto", "partnership")|list|length }}</span>
+                <div class="stat-label">Partnership Inquiries</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ messages|selectattr("category", "equalto", "inventory")|list|length }}</span>
+                <div class="stat-label">Inventory Requests</div>
+            </div>
+        </div>
+
+        <div class="messages-section">
+            <h2>📨 Recent Messages</h2>
+
+            {% if messages %}
+                <div class="messages-grid">
+                    {% for message in messages %}
+                    <div class="message-card {% if not message.is_read %}unread{% endif %}">
+                        <div class="message-header">
+                            <div class="message-meta">
+                                <div class="sender-info">
+                                    <div class="sender-name">
+                                        {% if not message.is_read %}
+                                            <span class="unread-indicator"></span>
+                                        {% endif %}
+                                        {{ message.name }}
+                                    </div>
+                                    <div class="sender-email">{{ message.email }}</div>
+                                    {% if message.company %}
+                                        <div class="company-name">{{ message.company }}</div>
+                                    {% endif %}
+                                </div>
+                                <div style="text-align: right;">
+                                    <div class="category-badge {{ message.category }}">{{ message.category }}</div>
+                                    <div class="message-timestamp">{{ message.timestamp.strftime('%m/%d/%Y at %I:%M %p') }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="message-content">
+                            <div class="message-text">{{ message.message }}</div>
+
+                            <div class="message-actions">
+                                <a href="{{ url_for('admin_reply', message_id=message.id) }}" class="action-btn btn-reply">📧 Reply</a>
+
+                                {% if not message.is_read %}
+                                    <a href="{{ url_for('mark_read', message_id=message.id) }}" 
+                                       class="action-btn btn-mark-read">✓ Mark Read</a>
+                                {% endif %}
+
+                                <a href="{{ url_for('delete_message', message_id=message.id) }}" 
+                                   class="action-btn btn-delete"
+                                   onclick="return confirm('Are you sure you want to delete this message?')">🗑️ Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3>📭 No messages yet</h3>
+                    <p>When customers send messages through the contact form, they'll appear here.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh page every 5 minutes to check for new messages
+        setTimeout(function() {
+            location.reload();
+        }, 300000);
+
+        // Add confirmation for delete actions
+        document.querySelectorAll('.btn-delete').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                if (!confirm('Are you sure you want to delete this message? This action cannot be undone.')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

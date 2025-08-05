@@ -1,3 +1,5 @@
+run = "pip install -r requirements.txt && gunicorn -b 0.0.0.0:3000 main:app"
+language = "python3"
 entrypoint = "main.py"
 modules = ["python-3.11"]
 
@@ -11,5 +13,9 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "main.py"]
+run = "gunicorn -b 0.0.0.0:3000 main:app"
 deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 3000
+externalPort = 80

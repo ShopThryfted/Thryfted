@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - Thryfted Archive{% endblock %}
+
+{% block extra_head %}
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+    .cart-actions-flex {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .cart-actions-flex form {
+        margin: 0;
+    }
+
+    .secondary-button {
+        background-color: #ccc;
+        color: #000;
+    }
+
+    .cta-button {
+        background-color: #222;
+        color: #fff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="cart-section">
+    <div class="container">
+        <h1>Your Cart</h1>
+
+        {% if items %}
+        <form action="{{ url_for('update_cart') }}" method="POST" class="cart-form">
+            <div class="cart-items">
+                {% for item in items %}
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <img src="{{ url_for('static', filename=item.product.image) }}" alt="{{ item.product.name }}">
+                    </div>
+                    <div class="cart-item-details">
+                        <h3>{{ item.product.name }}</h3>
+                        <p>{{ item.product.brand }}</p>
+                        <p class="item-price">${{ "%.2f"|format(item.product.price) }}</p>
+                    </div>
+                    <div class="cart-item-controls">
+                        <label for="quantity_{{ item.product.id }}">Quantity:</label>
+                        <input type="number" name="quantity_{{ item.product.id }}" value="{{ item.quantity }}" min="1" max="10" class="quantity-input">
+                        <p class="item-subtotal">Subtotal: ${{ "%.2f"|format(item.subtotal) }}</p>
+                        <a href="{{ url_for('remove_from_cart_route', product_id=item.product.id) }}" class="remove-link">Remove</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <h3>Total: ${{ "%.2f"|format(total) }}</h3>
+                </div>
+
+                <div class="cart-actions-flex">
+                    <form action="{{ url_for('update_cart') }}" method="POST">
+                        <button type="submit" class="secondary-button">Update Cart</button>
+                    </form>
+
+                    <form action="{{ url_for('create_checkout_session') }}" method="POST">
+                        <button type="submit" class="cta-button">Checkout with Stripe</button>
+                    </form>
+                </div>
+            </div>
+        </form>
+
+        {% else %}
+        <div class="empty-cart">
+            <h2>Your cart is empty</h2>
+            <p>Discover amazing clearance deals waiting for you!</p>
+            <a href="{{ url_for('shop') }}" class="cta-button">Start Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

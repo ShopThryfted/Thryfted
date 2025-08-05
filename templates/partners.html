@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+
+{% block title %}Brand Partners - Thryfted Archive{% endblock %}
+
+{% block content %}
+<section class="partners-hero">
+    <div class="container">
+        <h1>Partner With Thryfted</h1>
+        <p class="partners-subtitle">Got unsold inventory? Reach teens who want your style — without the markup.</p>
+    </div>
+</section>
+
+<section class="partners-content">
+  <div class="container">
+    <div class="partners-grid">
+
+      <!-- Why Partner With Us Section -->
+      <div class="partners-text">
+        <h2>Why Partner With Us?</h2>
+        <div class="partners-benefits">
+          <div class="benefit">
+            <h3>🎯 Targeted Reach</h3>
+            <p>Connect directly with engaged teens of color who love your brand</p>
+          </div>
+          <div class="benefit">
+            <h3>📈 Inventory Management</h3>
+            <p>Turn unsold stock into community impact and brand loyalty</p>
+          </div>
+          <div class="benefit">
+            <h3>🤝 Social Impact</h3>
+            <p>Join our mission to make fashion more equitable and accessible</p>
+          </div>
+          <div class="benefit">
+            <h3>💡 Brand Exposure</h3>
+            <p>Get your products in front of the next generation of loyal customers</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="contact-section">
+        <div class="contact-methods">
+
+          <!-- Let's Connect -->
+          <div class="contact-method">
+            <h3>Let's Connect</h3>
+            <p>Ready to partner with us? Reach out through any of these channels:</p>
+            <div class="contact-info">
+              <div class="contact-item">
+                <strong>📧 Email:</strong>
+                <a href="mailto:{{ company_info.email }}">{{ company_info.email }}</a>
+              </div>
+              <div class="contact-item">
+                <strong>📱 Instagram:</strong>
+                <a href="https://instagram.com/{{ company_info.instagram.replace('@', '') }}" target="_blank">{{ company_info.instagram }}</a>
+              </div>
+              <div class="contact-item">
+                <strong>📞 Phone:</strong>
+                <a href="tel:{{ company_info.phone }}">{{ company_info.phone }}</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="contact-form-container">
+            <h3>Or Send Us a Message</h3>
+            <form class="contact-form" method="POST">
+              <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+
+              <div class="form-group">
+                <label for="company">Company/Brand</label>
+                <input type="text" id="company" name="company">
+              </div>
+
+              <div class="form-group">
+                <label for="category">What's this about? *</label>
+                <select id="category" name="category" required>
+                  <option value="">Select a category...</option>
+                  <option value="partnership">Brand Partnership</option>
+                  <option value="inventory">Inventory Clearance</option>
+                  <option value="collaboration">Collaboration Inquiry</option>
+                  <option value="press">Press & Media</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" rows="5" placeholder="Tell us about your brand, inventory, or partnership idea..." required></textarea>
+              </div>
+
+              <button type="submit" class="cta-button">Send Message</button>
+            </form>
+          </div>
+        </div> <!-- end contact-methods -->
+      </div> <!-- end contact-section -->
+
+    </div> <!-- end partners-grid -->
+  </div> <!-- end container -->
+</section>
+
+<style>
+.partners-hero {
+    text-align: center;
+    padding: 60px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    margin-bottom: 60px;
+}
+
+.partners-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.partners-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.partners-section {
+    margin-bottom: 80px;
+}
+
+.partners-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    font-weight: 700;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.benefit-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+}
+
+.benefit-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.contact-section {
+    background: white;
+    padding: 60px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    margin-bottom: 80px;
+}
+
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    align-items: start;
+}
+
+.contact-method h3,
+.contact-form-container h3 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.contact-info {
+    margin-top: 30px;
+}
+
+.contact-item {
+    margin-bottom: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+.contact-item strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.contact-item a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .partners-hero {
+        padding: 40px 20px;
+    }
+
+    .partners-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .contact-methods {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .contact-section {
+        padding: 40px 30px;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .contact-section {
+        padding: 30px 20px;
+    }
+
+    .benefit-card {
+        padding: 30px 20px;
+    }
+}
+</style>
+{% endblock %}

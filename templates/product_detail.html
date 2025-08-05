@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - Thryfted Archive{% endblock %}
+
+{% block content %}
+<section class="product-detail">
+    <div class="container">
+        <div class="product-detail-grid">
+            <div class="product-detail-image">
+                <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+            </div>
+            <div class="product-detail-info">
+                <h1 class="product-detail-name">{{ product.name }}</h1>
+                <p class="product-detail-brand">{{ product.brand }}</p>
+                <div class="product-detail-price">
+                    <span class="current-price">${{ "%.2f"|format(product.price) }}</span>
+                    <span class="original-price">${{ "%.2f"|format(product.original_price) }}</span>
+                    {% set discount = ((product.original_price - product.price) / product.original_price * 100)|round|int %}
+                    <span class="discount-text">Save {{ discount }}%</span>
+                </div>
+                <p class="product-detail-description">{{ product.description }}</p>
+                <div class="product-detail-actions">
+                    <a href="{{ url_for('add_to_cart_route', product_id=product.id) }}" class="cta-button">Add to Cart</a>
+                    <a href="{{ url_for('shop') }}" class="secondary-button">Continue Shopping</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

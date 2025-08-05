@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Reply to {{ message.name }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        
+        input, textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #ccc; }
+        
+        button { margin-top: 20px; padding: 12px 20px; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        
+        button:hover { background-color: #0056b3; }
+        a { display: inline-block; margin-top: 20px; text-decoration: none; color: #555; }
+        
+        .flash-success {
+          background-color: #d1fae5;
+          color: #065f46;
+          padding: 1rem;
+          border-radius: 8px;
+          margin-bottom: 1rem;
+        }
+
+        .flash-error {
+          background-color: #fee2e2;
+          color: #991b1b;
+          padding: 1rem;
+          border-radius: 8px;
+          margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reply to {{ message.name }}</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    <form method="post">
+        <label>To:</label>
+        <input type="email" value="{{ message.email }}" readonly />
+
+        <label>Subject:</label>
+        <input type="text" name="subject" value="{{ default_subject }}" required />
+
+        <label>Message:</label>
+        <textarea name="body" rows="10" required>{{ default_body }}</textarea>
+
+        <button type="submit">Send Reply</button>
+    </form>
+    <a href="{{ url_for('admin_messages') }}">← Back to Admin Messages</a>
+</body>
+</html>

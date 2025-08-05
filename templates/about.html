@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - Thryfted Archive{% endblock %}
+
+{% block content %}
+<section class="about-hero">
+    <div class="container">
+        <h1>About Thryfted Archive</h1>
+        <p class="about-tagline">Equal access to style that fits your feed — and your life.</p>
+    </div>
+</section>
+
+<section class="mission-section">
+    <div class="container">
+        <div class="mission-content">
+            <h2>Our Mission</h2>
+            <p>Thryfted Archive exists to bridge the gap between teens of color in low-income communities and the brand-name fashion they love. We believe style shouldn't be a luxury — it should be accessible to everyone.</p>
+
+            <div class="why-thryfted">
+                <h3>Why Thryfted?</h3>
+                <div class="reasons-grid">
+                    <div class="reason">
+                        <h4>💰 Affordable Luxury</h4>
+                        <p>Get authentic designer pieces at clearance prices, not inflated retail markups.</p>
+                    </div>
+                    <div class="reason">
+                        <h4>⚖️ Fighting Inequality</h4>
+                        <p>Addressing the price gap that makes women's clothing disproportionately expensive.</p>
+                    </div>
+                    <div class="reason">
+                        <h4>🎨 Style Diversity</h4>
+                        <p>More variety for everyone, especially expanding options for men's fashion.</p>
+                    </div>
+                    <div class="reason">
+                        <h4>🌍 Community Impact</h4>
+                        <p>Every purchase supports our mission of fashion equity and accessibility.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="founders-section">
+    <div class="container">
+        <h2>Meet the Founders</h2>
+        <div class="founders-grid">
+            {% for founder in founders %}
+            <div class="founder-card">
+                <div class="founder-image">
+                    <img src="{{ url_for('static', filename=founder.image) }}" alt="{{ founder.name }}">
+                </div>
+                <div class="founder-info">
+                    <h3>{{ founder.name }}</h3>
+                    <p class="founder-role">{{ founder.role }}</p>
+                    <p class="founder-bio">{{ founder.bio }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

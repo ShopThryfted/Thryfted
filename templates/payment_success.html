@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Payment Successful - Thryfted Archive{% endblock %}
+
+{% block content %}
+<section class="success-section">
+    <div class="container text-center">
+        <div class="success-content">
+            <h1>🎉 Payment Successful!</h1>
+            <p>Thank you for your order! You're helping us make style more accessible.</p>
+            <p>You'll receive a confirmation email shortly with your order details.</p>
+            <div class="success-actions">
+                <a href="{{ url_for('shop') }}" class="cta-button">Continue Shopping</a>
+                <a href="{{ url_for('home') }}" class="secondary-button">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

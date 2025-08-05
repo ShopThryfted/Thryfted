@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="survey-container">
+    <h2>Help Us Build Something Better</h2>
+    <p>Tell us what you'd wear. We'll show you what’s possible.</p>
+
+    <form method="POST" action="{{ url_for('survey') }}" class="survey-form" id="surveyForm">
+        <label for="style">What’s your style like?</label>
+        <input type="text" name="style" id="style" placeholder="e.g. streetwear, minimal, Y2K" required>
+
+        <label for="size">What size do you usually wear?</label>
+        <input type="text" name="size" id="size" placeholder="e.g. M, size 28, 6.5W shoes" required>
+
+        <label for="brands">What brands do you like, or would you buy at lower prices?</label>
+        <textarea name="brands" id="brands" placeholder="e.g. Nike, Brandy Melville, Ed Hardy" required></textarea>
+
+        <label for="name">Your Name</label>
+        <input type="text" name="name" id="name" required>
+
+        <label for="email">Your Email</label>
+        <input type="email" name="email" id="email" required>
+
+        <button type="submit">Submit</button>
+    </form>
+</section>
+
+{% endblock %}
