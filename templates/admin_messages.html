@@ -389,7 +389,7 @@
                                 </div>
                                 <div style="text-align: right;">
                                     <div class="category-badge {{ message.category }}">{{ message.category }}</div>
-                                    <div class="message-timestamp">{{ message.timestamp.strftime('%m/%d/%Y at %I:%M %p') }}</div>
+                                    <div class="message-timestamp">{{ format_est(message.timestamp) }}</div>
                                 </div>
                             </div>
                         </div>

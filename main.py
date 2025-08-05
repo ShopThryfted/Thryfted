@@ -45,7 +45,7 @@ class ContactMessage(db.Model):
     company = db.Column(db.String(100))
     category = db.Column(db.String(50), nullable=False)
     message = db.Column(db.Text, nullable=False)
-    timestamp = db.Column(db.DateTime, default=timestamp_str)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     is_read = db.Column(db.Boolean, default=False)
 
     def __init__(self, name, email, company, category, message):
@@ -386,6 +386,12 @@ def stripe_webhook():
 
     return 'Success', 200
 
+def format_est(timestamp):
+    if timestamp is None:
+        return ''
+    est = pytz.timezone('America/New_York')
+    utc = timestamp.replace(tzinfo=pytz.utc)
+    return utc.astimezone(est).strftime('%m/%d/%Y at %I:%M %p %Z')
 
 @app.route('/partners', methods=['GET', 'POST'])
 def partners():
@@ -404,6 +410,7 @@ def partners():
             return redirect(url_for('partners'))
         except Exception as e:
             db.session.rollback()
+            print("Form submission error:", e)
             flash('Sorry, there was an error sending your message. Please try again.', 'error')
 
     company_info = {
@@ -413,6 +420,7 @@ def partners():
     }
 
     return render_template('partners.html', company_info=company_info)
+
 
 @app.route('/about')
 def about():
@@ -501,6 +509,8 @@ def admin_reply(message_id):
 
 with app.app_context():
     db.create_all()
+
+app.jinja_env.globals.update(format_est=format_est)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
